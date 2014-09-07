@@ -44,7 +44,7 @@ date.times <- function(df) {
 # plot2.R plotter
 plot2 <- function(df) {
     # make a plot
-    plot(date.times(df),
+    plot(df$DateTime,
          df$Global_active_power,
          ylab="Global Active Power (kilowatts)",
          xlab="",
@@ -53,19 +53,16 @@ plot2 <- function(df) {
 
 # plot3.R plotter
 plot3 <- function(df) {
-    # get date times
-    dt = date.times(df)
-
     # make a plot
-    plot(dt,
+    plot(df$DateTime,
          df$Sub_metering_1,
          ylab="Energy sub metering",
          xlab="",
          type="l")
 
     # add the other submetering lines
-    lines(dt, df$Sub_metering_2, col="red")
-    lines(dt, df$Sub_metering_3, col="blue")
+    lines(df$DateTime, df$Sub_metering_2, col="red")
+    lines(df$DateTime, df$Sub_metering_3, col="blue")
 
     # add a legend
     legend("topright",
@@ -74,7 +71,7 @@ plot3 <- function(df) {
            lty="solid")
 }
 
-# function to plot to a PNG file
+# function to plot to a PNG file using plot.fn
 plot.png <- function(df, filename, plot.fn) {
     # write to png
     png(filename=filename, height=480, width=480)
