@@ -27,12 +27,9 @@ load.data <- function(file) {
 select.data <- function(df,
                         start = ymd("2007-02-01"),
                         end   = ymd("2007-02-02")) {
-                        # start = as.Date("2007-02-01", "%Y-%m-%d"),
-                        # end   = as.Date("2007-02-02", "%Y-%m-%d")) {
     # predicate returns true when date is between range
     p <- function(date) {
         d <- dmy(date)
-        # d <- as.Date(date, "%d/%m/%Y")
         d >= start & d <= end
     }
     subset(df, p(Date))
