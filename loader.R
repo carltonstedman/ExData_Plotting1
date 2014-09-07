@@ -3,6 +3,9 @@
 # Useful functions for loading the household power consumption data
 #
 
+# use lubridate
+library(lubridate)
+
 load.data <- function(file) {
     # get inital 10 rows to determine column classes
     initial <- read.table(file,
@@ -22,22 +25,19 @@ load.data <- function(file) {
 
 # subsets data by start and end dates
 select.data <- function(df,
-                        start = as.Date("2007-02-01", "%Y-%m-%d"),
-                        end   = as.Date("2007-02-02", "%Y-%m-%d")) {
+                        start = ymd("2007-02-01"),
+                        end   = ymd("2007-02-02")) {
+                        # start = as.Date("2007-02-01", "%Y-%m-%d"),
+                        # end   = as.Date("2007-02-02", "%Y-%m-%d")) {
     # predicate returns true when date is between range
     p <- function(date) {
-        d <- as.Date(date, "%d/%m/%Y")
+        d <- dmy(date)
+        # d <- as.Date(date, "%d/%m/%Y")
         d >= start & d <= end
     }
     subset(df, p(Date))
 }
 
-df <- load.data("household_power_consumption.txt")
-ss <- select.data(df)
-
-names(ss)
-
-hist(ss$Global_active_power,
-     main="Global Active Power",
-     xlab="Global Active Power (kilowatts)",
-     col="red")
+date.times <- function(df) {
+    dmy(df$Date)+hms(df$Time)
+}
